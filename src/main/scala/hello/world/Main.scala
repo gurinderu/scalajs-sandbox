@@ -1,18 +1,16 @@
 package hello.world
 
-import scala.scalajs.js
-import scala.scalajs.js.annotation.{JSExportTopLevel, JSImport}
-import scala.scalajs.LinkingInfo
-
-import slinky.core._
-import slinky.web.ReactDOM
-import slinky.hot
-
 import org.scalajs.dom
+import slinky.hot
+import slinky.web.ReactDOM
+
+import scala.scalajs.{LinkingInfo, js}
+import scala.scalajs.js.annotation.{JSExportTopLevel, JSImport}
 
 @JSImport("css/index.css", JSImport.Default)
 @js.native
 object IndexCSS extends js.Object
+
 
 object Main {
   val css = IndexCSS

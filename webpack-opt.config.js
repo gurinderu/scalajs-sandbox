@@ -5,22 +5,27 @@ var path = require("path");
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = merge(core, {
-  mode: "production",
-  entry: {
-    "test-opt": [ path.resolve(__dirname, "./opt-launcher.js") ]
-  },
-  output: {
-    "path": path.resolve(__dirname, "../../../../build"),
-    "filename": "[name]-bundle.js"
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "../../../../src/main/resources/public/index.html")
-    }),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production')
-      }
-    })
-  ]
+    mode: "production",
+    entry: {
+        "test-opt": [path.resolve(__dirname, "./opt-launcher.js")]
+    },
+    output: {
+        path: path.resolve(__dirname, "../../../../build"),
+        filename: "[name].[hash].js",
+        chunkFilename: '[name].[hash].js'
+    },
+    optimization: {
+        splitChunks: {
+            chunks: 'all'
+        }
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, "../../../../src/main/resources/public/index.html")
+        }),
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify('production')
+            }
+        })]
 });

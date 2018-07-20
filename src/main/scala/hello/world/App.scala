@@ -1,5 +1,7 @@
 package hello.world
 
+import hello.world.components.material
+import hello.world.components.material.Button.Props
 import slinky.core._
 import slinky.core.annotations.react
 import slinky.core.facade.ReactElement
@@ -16,6 +18,7 @@ object AppCSS extends js.Object
 @js.native
 object ReactLogo extends js.Object
 
+
 @react class App extends StatelessComponent {
   type Props = Unit
 
@@ -30,9 +33,10 @@ object ReactLogo extends js.Object
       p(className := "App-intro")(
         "To get started, edit ", code("App.scala"), " and save to reload."
       ),
-      p(className := "Azazaa")(
-        "zazaaza"
-      )
+      material.CssBaseline(),
+      material.Button(Props(p(className := "App-intro")(
+        "To get started, edit ", code("App.scala"), " and save to reload."
+      )))
     )
   }
 }
