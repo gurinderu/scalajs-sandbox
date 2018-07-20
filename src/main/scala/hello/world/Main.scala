@@ -1,19 +1,23 @@
 package hello.world
 
+import hello.world.components.material.{Colors, MuiThemeProvider, Styles}
+import hello.world.router.BrowserRouter
 import org.scalajs.dom
 import slinky.hot
 import slinky.web.ReactDOM
 
-import scala.scalajs.{LinkingInfo, js}
-import scala.scalajs.js.annotation.{JSExportTopLevel, JSImport}
-
-@JSImport("css/index.css", JSImport.Default)
-@js.native
-object IndexCSS extends js.Object
-
+import scala.scalajs.LinkingInfo
+import scala.scalajs.js.annotation.JSExportTopLevel
+import scala.scalajs.js.Dynamic._
 
 object Main {
-  val css = IndexCSS
+
+  //make theme configurable
+  private val theme = Styles.createMuiTheme(literal(
+    palette = literal(
+      primary = Colors.indigo,
+      secondary = Colors.indigo
+    )))
 
   @JSExportTopLevel("entrypoint.main")
   def main(): Unit = {
@@ -28,6 +32,7 @@ object Main {
       elem
     }
 
-    ReactDOM.render(App(), container)
+
+    ReactDOM.render(MuiThemeProvider(theme = theme)(BrowserRouter(Layout())), container)
   }
 }

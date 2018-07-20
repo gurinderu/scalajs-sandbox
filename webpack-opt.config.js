@@ -16,11 +16,6 @@ module.exports = merge(core, {
         filename: "[name].[hash].js",
         chunkFilename: '[name].[hash].js'
     },
-    optimization: {
-        splitChunks: {
-            chunks: 'all'
-        }
-    },
     plugins: [
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, "../../../../src/main/resources/public/index.html")
@@ -30,6 +25,8 @@ module.exports = merge(core, {
                 NODE_ENV: JSON.stringify('production')
             }
         }),
-        new BundleAnalyzerPlugin()
+        new BundleAnalyzerPlugin({
+            analyzerMode: 'static'
+        })
     ]
 });

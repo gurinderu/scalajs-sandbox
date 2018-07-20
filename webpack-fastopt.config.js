@@ -11,19 +11,49 @@ module.exports = merge(core, {
     output: {
         path: __dirname,
         filename: "[name]-library.js",
-        library: "appLibrary",
+        library: "library",
         libraryTarget: "var"
     },
-    devtool: "source-map",
     module: {
-        noParse: function (content) {
-            return content.endsWith("-fastopt.js");
-        }
+        rules: [
+            {
+                test: /\.js$/,
+                use: [
+                    {
+                        loader: "scalajs-friendly-source-map-loader",
+                        options: {
+                            skipFileURLWarnings: true, // or false, default is true
+                            bundleHttp: true // or false, default is true
+                        }
+                    }],
+                enforce: "pre"
+            }
+        ]
     },
+    devtool: "source-map",
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, "../../../../public/index-fastopt.html"),
+            template: path.resolve(__dirname, "../../../../src/main/resources/public/index-fastopt.html"),
             inject: false
         })
-    ]
+    ],
+    devServer: {
+        proxy: {
+            '/**': {  //catch all requests
+                target: '/index.html',  //default target
+                secure: false,
+                bypass: function (req, res, opt) {
+                    //your custom code to check for any exceptions
+                    //console.log('bypass check', {req: req, res:res, opt: opt});
+                    if (req.path.indexOf('/static/') !== -1 || req.path.indexOf('/public/') !== -1) {
+                        return '/'
+                    }
+
+                    if (req.headers.accept.indexOf('html') !== -1) {
+                        return '/index-fastopt.html';
+                    }
+                }
+            }
+        }
+    }
 });
