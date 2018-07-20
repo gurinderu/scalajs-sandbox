@@ -3,6 +3,8 @@ var core = require('./webpack-core.config.js');
 var webpack = require("webpack");
 var path = require("path");
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 
 module.exports = merge(core, {
     mode: "production",
@@ -27,5 +29,7 @@ module.exports = merge(core, {
             'process.env': {
                 NODE_ENV: JSON.stringify('production')
             }
-        })]
+        }),
+        new BundleAnalyzerPlugin()
+    ]
 });

@@ -14,6 +14,7 @@ npmDevDependencies in Compile += "css-loader" -> "1.0.0"
 npmDevDependencies in Compile += "html-webpack-plugin" -> "3.2.0"
 npmDevDependencies in Compile += "copy-webpack-plugin" -> "4.5.2"
 npmDevDependencies in Compile += "webpack-merge" -> "4.1.3"
+npmDevDependencies in Compile += "webpack-bundle-analyzer" -> "2.13.1"
 npmDevDependencies in Compile += "@material-ui/core" -> "1.4.0"
 npmDevDependencies in Compile += "@material-ui/icons" -> "1.1.0"
 
