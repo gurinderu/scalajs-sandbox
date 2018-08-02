@@ -1,4 +1,3 @@
-build/
+frontend/build/
 target/
-project/target/
 .idea/

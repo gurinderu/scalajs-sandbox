@@ -5,8 +5,8 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = merge(core, {
     entry: {
-        "dependencies": ["./test-fastopt-entrypoint.js"],
-        "test-fastopt": ["./hot-launcher.js"]
+        "dependencies": ["./scalajs-sandbox-frontend-fastopt-entrypoint.js"],
+        "scalajs-sandbox-frontend-fastopt": ["./hot-launcher.js"]
     },
     output: {
         path: __dirname,
@@ -15,6 +15,9 @@ module.exports = merge(core, {
         libraryTarget: "var"
     },
     module: {
+        noParse: function (content) {
+            return content.endsWith("-fastopt.js");
+        },
         rules: [
             {
                 test: /\.js$/,

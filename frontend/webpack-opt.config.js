@@ -9,7 +9,7 @@ var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlug
 module.exports = merge(core, {
     mode: "production",
     entry: {
-        "test-opt": [path.resolve(__dirname, "./opt-launcher.js")]
+        "scalajs-sandbox-frontend-opt": [path.resolve(__dirname, "./opt-launcher.js")]
     },
     output: {
         path: path.resolve(__dirname, "../../../../build"),
