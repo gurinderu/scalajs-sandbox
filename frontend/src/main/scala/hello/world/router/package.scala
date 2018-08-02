@@ -23,40 +23,65 @@ package object router {
 
   @react object Route extends ExternalComponent {
 
-    case class Props(component: ReactComponentClass, path: String = null, exact: Boolean = false)
+    @JSImport("react-router-dom", "Route")
+    @js.native
+    object Import extends js.Object
 
-    override val component = ReactRouterDOM.Route
+    case class Props(component: ReactComponentClass,
+                     path: String = null,
+                     exact: Boolean = false)
+
+    override val component = Import
   }
 
   object BrowserRouter extends ExternalComponentNoPropsWithAttributes {
 
-    override val component = ReactRouterDOM.BrowserRouter
+    @JSImport("react-router-dom", "BrowserRouter")
+    @js.native
+    object Import extends js.Object
+
+    override val component = Import
   }
 
   @react object Router extends ExternalComponent {
 
+    @JSImport("react-router-dom", "Router")
+    @js.native
+    object Import extends js.Object
+
     case class Props(children: ReactElement)
 
-    override val component = ReactRouterDOM.Router
+    override val component = Import
   }
-
-
   @react object NavLink extends ExternalComponentWithAttributes[a.tag.type] {
+
+    @JSImport("react-router-dom", "NavLink")
+    @js.native
+    object Import extends js.Object
 
     case class Props(to: String)
 
-    override val component = ReactRouterDOM.NavLink
+    override val component = Import
   }
 
   @react object Link extends ExternalComponentWithAttributes[*.tag.type] {
 
+    @JSImport("react-router-dom", "Link")
+    @js.native
+    object Import extends js.Object
+
     case class Props(to: String)
 
-    override val component = ReactRouterDOM.Link
+    override val component = Import
   }
 
-   object Switch extends ExternalComponentNoProps {
-    override val component = ReactRouterDOM.Switch
+  object Switch extends ExternalComponentNoProps {
+
+    @JSImport("react-router-dom", "Switch")
+    @js.native
+    object Import extends js.Object
+
+    override val component = Import
   }
 
 }
