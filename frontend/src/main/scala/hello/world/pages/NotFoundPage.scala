@@ -1,14 +1,13 @@
-package hello.world
+package hello.world.pages
 
-import slinky.core._
+import slinky.core.StatelessComponent
 import slinky.core.annotations.react
 import slinky.core.facade.ReactElement
 import slinky.web.html.div
 
 import scala.scalajs.js
 
-
-@react class PageOne extends StatelessComponent {
+@react class NotFoundPage extends StatelessComponent {
 
   trait Classes extends js.Object {}
 
@@ -27,7 +26,6 @@ import scala.scalajs.js
 
 
   def render(): ReactElement = {
-    div("Page one")
+    div("404")
   }
 }
-

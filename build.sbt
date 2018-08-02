@@ -4,7 +4,7 @@ lazy val frontend = project
   .in(file("frontend"))
   .enablePlugins(ScalaJSBundlerPlugin)
   .settings(
-    name:="scalajs-sandbox-frontend",
+    name := "scalajs-sandbox-frontend",
     npmDependencies in Compile ++= Seq(
       "react" -> "16.4.1",
       "react-dom" -> "16.4.1",

@@ -1,7 +1,7 @@
 package hello.world
 
 import hello.world.components.material.{Colors, MuiThemeProvider, Styles}
-import hello.world.router.BrowserRouter
+import hello.world.components.router.BrowserRouter
 import org.scalajs.dom
 import slinky.hot
 import slinky.web.ReactDOM

@@ -1,12 +1,15 @@
 package hello.world
 
 import hello.world.components.material._
-import hello.world.router.{Link, Route, Switch}
+import hello.world.components.router.{Link, Route, Switch}
+import hello.world.pages.{HomePage, PageOne}
 import slinky.core.ComponentWrapper
 import slinky.core.facade.ReactElement
 import slinky.readwrite.{Reader, Writer}
 import slinky.web.html._
-import slinky.web.html.style
+import slinky.web.svg.path
+import hello.world.pages._
+
 import scala.scalajs.js
 import scala.scalajs.js.ConstructorTag
 import scala.scalajs.js.Dynamic._
@@ -14,10 +17,51 @@ import scala.scalajs.js.Dynamic._
 object Layout extends ComponentWrapper {
 
   type Props = Unit
-
-  case class State(mobileOpen: Boolean)
-
   private val drawerWidth = 240
+  private val styles: js.Function1[Theme, js.Object] = (theme: Theme) =>
+    literal(
+      link = literal(textDecoration = "none"),
+      root = literal(
+        flexGrow = 1,
+        zIndex = 1,
+        overflow = "hidden",
+        position = "relative",
+        display = "flex",
+        width = "100%",
+        height = "100%"
+      ),
+      appBar = literal(
+        "position" -> "absolute",
+        "marginLeft" -> drawerWidth,
+        theme.breakpoints.up("md") -> literal(
+          width = s"calc(100% - ${drawerWidth}px)")
+      ),
+      navIconHide =
+        literal(theme.breakpoints.up("md") -> literal(display = "none")),
+      drawerPaper = literal(
+        theme.breakpoints.up("md") -> literal(position = "relative"),
+        "width" -> drawerWidth
+      ),
+      content = literal(
+        flexGrow = 1,
+        backgroundColor = theme.palette.background.default,
+        padding = theme.spacing.unit * 3
+      ),
+      toolbar = theme.mixins.toolbar,
+    )
+
+
+  override def componentConstructor(
+                                     implicit propsReader: Reader[Unit],
+                                     stateWriter: Writer[Layout.State],
+                                     stateReader: Reader[Layout.State],
+                                     constructorTag: ConstructorTag[Def]): js.Object = {
+    Styles.withStyles(styles, literal(withTheme = true))(
+      super.componentConstructor(propsReader,
+        stateWriter,
+        stateReader,
+        constructorTag))
+  }
 
   trait JsProps extends js.Object {
     def classes: Classes
@@ -73,55 +117,9 @@ object Layout extends ComponentWrapper {
     def up(value: String): String
   }
 
-  private val styles: js.Function1[Theme, js.Object] = (theme: Theme) =>
-    literal(
-      link = literal(textDecoration = "none"),
-      root = literal(
-        flexGrow = 1,
-        zIndex = 1,
-        overflow = "hidden",
-        position = "relative",
-        display = "flex",
-        width = "100%",
-        height = "100%"
-      ),
-      appBar = literal(
-        "position" -> "absolute",
-        "marginLeft" -> drawerWidth,
-        theme.breakpoints.up("md") -> literal(
-          width = s"calc(100% - ${drawerWidth}px)")
-      ),
-      navIconHide =
-        literal(theme.breakpoints.up("md") -> literal(display = "none")),
-      drawerPaper = literal(
-        theme.breakpoints.up("md") -> literal(position = "relative"),
-        "width" -> drawerWidth
-      ),
-      content = literal(
-        flexGrow = 1,
-        backgroundColor = theme.palette.background.default,
-        padding = theme.spacing.unit * 3
-      ),
-      toolbar = theme.mixins.toolbar,
-  )
-
-  override def componentConstructor(
-      implicit propsReader: Reader[Unit],
-      stateWriter: Writer[Layout.State],
-      stateReader: Reader[Layout.State],
-      constructorTag: ConstructorTag[Def]): js.Object = {
-    Styles.withStyles(styles, literal(withTheme = true))(
-      super.componentConstructor(propsReader,
-                                 stateWriter,
-                                 stateReader,
-                                 constructorTag))
-  }
+  case class State(mobileOpen: Boolean)
 
   class Def(jsProps: JsProps) extends Definition(jsProps) {
-
-    private def handleDrawerToggle(): Unit = {
-      this.setState(this.state.copy(mobileOpen = !this.state.mobileOpen))
-    }
 
     override def render(): ReactElement = {
       val drawer = div(
@@ -154,9 +152,9 @@ object Layout extends ComponentWrapper {
           )(drawer)),
         Hidden(implementation = "css")(Hidden.smDown := Unit)(
           Drawer(open = true,
-                 classes = literal(
-                   paper = this.jsProps.classes.drawerPaper
-                 ))(drawer)),
+            classes = literal(
+              paper = this.jsProps.classes.drawerPaper
+            ))(drawer)),
         main(className := this.jsProps.classes.content)(
           div(className := this.jsProps.classes.toolbar),
           Switch(
@@ -166,6 +164,10 @@ object Layout extends ComponentWrapper {
           )
         )
       )
+    }
+
+    private def handleDrawerToggle(): Unit = {
+      this.setState(this.state.copy(mobileOpen = !this.state.mobileOpen))
     }
 
     override def initialState: State = State(mobileOpen = false)

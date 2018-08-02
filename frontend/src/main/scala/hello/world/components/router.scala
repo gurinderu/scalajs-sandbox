@@ -1,14 +1,15 @@
-package hello.world
+package hello.world.components
 
+import slinky.core._
 import slinky.core.annotations.react
 import slinky.core.facade.ReactElement
-import slinky.core._
 import slinky.web.html.{*, a}
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
+import scala.scalajs.js.|
 
-package object router {
+object router {
 
   @JSImport("react-router-dom", JSImport.Default)
   @js.native
