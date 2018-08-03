@@ -5,7 +5,6 @@ var path = require("path");
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-
 module.exports = merge(core, {
     mode: "production",
     entry: {
@@ -15,6 +14,11 @@ module.exports = merge(core, {
         path: path.resolve(__dirname, "../../../../build"),
         filename: "[name].[hash].js",
         chunkFilename: '[name].[hash].js'
+    },
+    optimization: {
+        splitChunks: {
+            chunks: 'all'
+        }
     },
     plugins: [
         new HtmlWebpackPlugin({
